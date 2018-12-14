@@ -11,13 +11,14 @@ Created on Tue Nov  6 15:18:19 2018
 #i.e an increase in temperature and they die (stopping condition).
 #The last bit of code, produces a graphic user interface.
 
-
+ 
 ##############################################################################
       ####### Import all necessary operators at the top ########
 ##############################################################################
 #Before you can run this model, the following operators and agent framework 
 #must be imported at the top of the model. This makes it easier to locate the
-#operators and also for Python to know what operators this code uses.
+#operators and framework and also for Python to know what operators this code 
+#uses.
 
 import sys
 import csv 
@@ -37,8 +38,8 @@ import bs4
                      ####### Create environment ########
 ##############################################################################
 
-#The following code creates an environment for the agents (ants) to 
-#interact in. 
+#The following code creates an environment for the agents (crazy yellow ants)  
+#to interact in. 
 
 environment = [] #empty list to hold data for the 2D environment created below
 
@@ -60,8 +61,8 @@ for row in reader:
                                     
 #the lines below will show the environment in a new window, you can remove 
 #the # key to run the model and see the full of extent of environment. It is
-#commented out here because in the GUI code, we plot using canvas.show(). So
-#it's better to comment it out unless you just want to see whether the above 
+#commented out here because in the GUI code below, we plot using canvas.show().
+#So it's better to comment it out unless you just want to see whether the above 
 #code creates the environment. Once the GUI code is entered you can comment
 #it out or delete it but its good to have it here to see whether your code
 #is working.
@@ -100,9 +101,9 @@ neighbourhood = 10      #number of times agents search for other agents and
 
 #print(td_ys)           #These three lines are commented out, not necessary
 #print(td_xs)           #to have once you have a complete code but you can
-#print (len (td_ys))    #use it to run the code above and see how many agents
+#print (len (td_ys))    #use it to run the code above and see number of agents
 
-fig = matplotlib.pyplot.figure(figsize=(7, 7)) 
+fig = matplotlib.pyplot.figure(figsize=(7, 7)) #plot and figure size
 ax = fig.add_axes([0, 0, 1, 1])
 
 #agent initialisation loop, connecting agents with environment and y,x data
@@ -120,16 +121,20 @@ def update(frame_number):
     
 #Create the axes in which the agents will be plotted in. This specifies
 #the starting point and end point inwhich agents will move around in.
-#The axes is from 0-100 
+#The axes is from 0-100, you can increase it but view the numerical values
+#in the raster data so that you don't go beyond. The max is 299.
     
     matplotlib.pyplot.xlim(0, 100) #extent of environment x axes
     matplotlib.pyplot.ylim(0, 100) #extent of environment y axes
    
     
-#define the condition in which the agents will stop
-    if random.random() <0.003:     #If temperature increases in the environment
+#define the condition in which the looping will stop
+    if random.random() <0.03:     #If temperature increases in the environment
         carry_on = False           #by a certain amount, the ants will die
-        print("stopping condition") #and the model stops runing.
+        print("stopping condition") #and the model stops running.Alter the
+                                    #value here to 0.003 or any other value
+                                    #to see changes in the duration of the
+                                    #loop.
     
 #######################################################################
 ####### Plotting the agents #########
@@ -164,17 +169,20 @@ def update(frame_number):
 ########################################################################
 
 #The line below can be used to see an animation of the model, with the
-#model to check the above codes work.
+#model to check the above codes work, where tasks will repeat according
+#to the frames in this case number of iterations.
         
 #animation = matplotlib.animation.FuncAnimation(fig, update, interval=1,
                              #repeat=False, frames=num_of_iterations)
-                             
-def gen_function(b = [0]): #generator function specifying the model to start 
-    a = 0                  #running from 0 and carry on if the repeat number 
-    global carry_on        #is below 100. It will not go beyond 100.
+
+#For the final model, the generator function specifies the model to start 
+#running from 0 and carry on if the repeat number is below 100.It will not 
+#go beyond 100.
+def gen_function(b = [0]): 
+    a = 0                  
+    global carry_on        
     while (a < 100) & (carry_on == True) :
         print(a)
-        sys.stdout.flush()
         yield a			  #Returns control and waits next call.
         a = a + 1
 
@@ -197,7 +205,7 @@ interval=1, repeat=False, frames=gen_function)
 def run():
     animation = matplotlib.animation.FuncAnimation(fig, update, 
                     frames=gen_function, repeat=False)
-    canvas.show() 
+    canvas.show()       
      
 root = tkinter.Tk() 
 root.wm_title("Crazy Yellow Ant invasion")    #model title
