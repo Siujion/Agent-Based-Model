@@ -177,9 +177,9 @@ def update(frame_number):
 
 #For the final model, the generator function specifies the model to start 
 #running from 0 and carry on if the repeat number is below 100.It will not 
-#go beyond 100. We can experiment here, that this is 100 seconds. So, for this
-#the temperature will change within 100 seconds and the ants will die, model
-#stops.
+#go beyond 100. In this scenario, this is 100 seconds. So, we assume that
+#the temperature will increase within 100 seconds and the ants will die and
+#the model stops.
                              
 def gen_function(b = [0]): 
     a = 0                  
