@@ -15,12 +15,11 @@ Created on Tue Nov  6 15:18:19 2018
 ##############################################################################
       ####### Import all necessary operators at the top ########
 ##############################################################################
-#Before you can run this model, the following operators and agent framework 
+#Before you can run this model, the following functions and agent framework 
 #must be imported at the top of the model. This makes it easier to locate the
-#operators and framework and also for Python to know what operators this code 
+#operators and framework and also for Python to know what functions this code 
 #uses.
 
-import sys
 import csv 
 import agentframework1
 import random
@@ -91,17 +90,20 @@ td_xs = soup.find_all(attrs={"class" : "x"})
                             #agents you can use this code to define the number
                             #of agents. However, we will use the next line
                             #to specify that we will model all of the agents
-                            #in the dataset.
-num_of_agents = len(td_ys)  #This calls all (length) of the agents in the 
+                            #in the dataset because we want to see a large
+                            #number of agents (invasive ants).
+                            
+num_of_agents = len(td_ys) #This calls all (length) of the agents in the 
                             #dataset. It could be len(td_ys) or len(td_xs)
-                            #because they both have the same length of data
+                            #because they both have the same length of data.
+                            
 num_of_iterations = 10  #number of times the agents repeat execution of task
 neighbourhood = 10      #number of times agents search for other agents and
                         #share resources with them
 
 #print(td_ys)           #These three lines are commented out, not necessary
 #print(td_xs)           #to have once you have a complete code but you can
-#print (len (td_ys))    #use it to run the code above and see number of agents
+#print (len (td_ys))    #use it to run the code above and see number of agents.
 
 fig = matplotlib.pyplot.figure(figsize=(7, 7)) #plot and figure size
 ax = fig.add_axes([0, 0, 1, 1])
@@ -131,7 +133,7 @@ def update(frame_number):
 #define the condition in which the looping will stop
     if random.random() <0.03:     #If temperature increases in the environment
         carry_on = False           #by a certain amount, the ants will die
-        print("stopping condition") #and the model stops running.Alter the
+        print("stopping condition") #and the model stops running. Alter the
                                     #value here to 0.003 or any other value
                                     #to see changes in the duration of the
                                     #loop.
@@ -142,8 +144,6 @@ def update(frame_number):
 #The agents are plotted in the environment
         
     matplotlib.pyplot.imshow(environment)
-    #for i in range(num_of_agents):
-        #matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
  
 #######################################################################
 ####### Agent communication ###########
@@ -177,11 +177,14 @@ def update(frame_number):
 
 #For the final model, the generator function specifies the model to start 
 #running from 0 and carry on if the repeat number is below 100.It will not 
-#go beyond 100.
+#go beyond 100. We can experiment here, that this is 100 seconds. So, for this
+#the temperature will change within 100 seconds and the ants will die, model
+#stops.
+                             
 def gen_function(b = [0]): 
     a = 0                  
     global carry_on        
-    while (a < 100) & (carry_on == True) :
+    while (a < 100) & (carry_on == True) : 
         print(a)
         yield a			  #Returns control and waits next call.
         a = a + 1
@@ -197,11 +200,10 @@ interval=1, repeat=False, frames=gen_function)
 ######### Creating a Graphic User Interface (GUI) #########
 ###########################################################################
  
-#The following code creates a new interface and a menu which can allows a 
-#user to click on a menu and run the model 
+#The following code creates a new interface and a menu which allows a 
+#user to click on a menu and run the model. 
 
 #define the animation that will run in the new interface.
-
 def run():
     animation = matplotlib.animation.FuncAnimation(fig, update, 
                     frames=gen_function, repeat=False)

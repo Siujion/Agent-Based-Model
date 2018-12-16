@@ -4,14 +4,17 @@ Created on Tue Nov  6 15:18:19 2018
 
 @author: Siu Pouvalu, 201205928
 """
+#The agent framework is a blueprint of the agents, their behaviour and how
+#they interact within the environment. 
+
 ########################################################################
                ########### Create agent class  ##########
 ########################################################################
-             
+#importing random allows the generation of random numbers which is necessary
+#when specifying how the agents move.
 import random 
 
-#Create an agent class which is basically the blueprint for the agents and
-#their behaviour
+#Create an agent class which will hold the attributes of the agents 
 class Agent(): 
 #Create a function that can be called from the objects or agents
    
